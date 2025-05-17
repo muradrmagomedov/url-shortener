@@ -67,6 +67,7 @@ func TestGetURL(t *testing.T) {
 			w := httptest.NewRecorder()
 			getURL(w, req)
 			result := w.Result()
+			defer result.Body.Close()
 			require.Equal(t, tt.want.statusCode, result.StatusCode)
 		})
 	}
