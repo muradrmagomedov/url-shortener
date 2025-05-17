@@ -32,6 +32,7 @@ func TestShortURL(t *testing.T) {
 			shortURL(w, req)
 			result := w.Result()
 			bodyByte, err := io.ReadAll(result.Body)
+			defer result.Body.Close()
 			body := string(bodyByte)
 			require.NoError(t, err)
 			require.Equal(t, tt.want.length, len(body))
