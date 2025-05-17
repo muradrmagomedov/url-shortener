@@ -54,7 +54,7 @@ func shortURL(w http.ResponseWriter, r *http.Request) {
 func shortenerGenerator(shortenerLength int) (shortURL string) {
 	buffer := []byte{}
 	var cursor int
-	for _ = range shortenerLength {
+	for range shortenerLength {
 		cursor = (rand.Intn(len(letters)))
 		buffer = append(buffer, letters[cursor])
 	}
