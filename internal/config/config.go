@@ -10,7 +10,7 @@ type Config struct {
 func NewConfig() Config {
 	ctf := Config{}
 	Addr := flag.String("a", "localhost:8080", "host address")
-	ShortURLAddr := flag.String("b", "http://localhost:8000/", "prefix for short url")
+	ShortURLAddr := flag.String("b", "http://localhost:8080/", "prefix for short url")
 	flag.Parse()
 	ctf.Addr = *Addr
 	ctf.ShortURLAddr = *ShortURLAddr
