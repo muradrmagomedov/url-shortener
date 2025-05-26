@@ -24,10 +24,10 @@ func ginShortURL(c *gin.Context) {
 
 	URL := string(body)
 	shortenedURLId := shortenerGenerator(shortenerLength)
-	urlDatabase[shortenedURLId] = URL
+	urlDatabase[shortenedURLId] = "/" + URL
 	c.Header("Content-Type", "text/plain")
 	if shortURLAddr == "" {
-		shortURLAddr = "http://" + host + ":" + port + "/"
+		shortURLAddr = "http://" + host + ":" + port
 	}
 	c.Data(http.StatusCreated, "text/plain", []byte(shortURLAddr+shortenedURLId))
 }
