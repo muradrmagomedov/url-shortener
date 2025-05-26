@@ -6,9 +6,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type GinServer struct{}
+var shortURLAddr string
 
-func NewGinServer() *GinServer {
+type GinServer struct {
+}
+
+func NewGinServer(host string) *GinServer {
+	shortURLAddr = host
 	return &GinServer{}
 }
 

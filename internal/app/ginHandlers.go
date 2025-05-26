@@ -7,6 +7,14 @@ import (
 )
 
 // shortURL() принимает метод POST и возвращает короткую ссылку
+
+func ginGetURL(c *gin.Context) {
+	id := c.Param("id")
+	URL := urlDatabase[id]
+	c.Header("Location", URL)
+	c.Redirect(http.StatusTemporaryRedirect, URL)
+}
+
 func ginShortURL(c *gin.Context) {
 	body, err := c.GetRawData()
 	if err != nil {
@@ -18,12 +26,8 @@ func ginShortURL(c *gin.Context) {
 	shortenedURLId := shortenerGenerator(shortenerLength)
 	urlDatabase[shortenedURLId] = URL
 	c.Header("Content-Type", "text/plain")
-	c.Data(http.StatusCreated, "text/plain", []byte("http://"+host+":"+port+"/"+shortenedURLId))
-}
-
-func ginGetURL(c *gin.Context) {
-	id := c.Param("id")
-	URL := urlDatabase[id]
-	c.Header("Location", URL)
-	c.Redirect(http.StatusTemporaryRedirect, URL)
+	if shortURLAddr == "" {
+		shortURLAddr = "http://" + host + ":" + port + "/"
+	}
+	c.Data(http.StatusCreated, "text/plain", []byte(shortURLAddr+shortenedURLId))
 }
