@@ -10,12 +10,11 @@ import (
 func main() {
 	ctf := config.NewConfig()
 	// server := server.NewServer()
-	server := server.NewGinServer()
+	server := server.NewGinServer(ctf.ShortURLAddr)
 	err := server.Run(ctf.Addr)
 	if err != nil {
 		log.Fatal(err)
 	}
-
 }
 
 // func createAddr(host, port string) string {
