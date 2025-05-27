@@ -16,7 +16,8 @@ const (
 
 func main() {
 	addr := createAddr(host, port)
-	server := server.NewServer()
+	// server := server.NewServer()
+	server := server.NewGinServer()
 	err := server.Run(addr)
 	if err != nil {
 		log.Fatal(err)
