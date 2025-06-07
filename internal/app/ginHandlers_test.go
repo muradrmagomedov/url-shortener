@@ -83,23 +83,23 @@ func TestGinGetURL(t *testing.T) {
 }
 
 func TestGinJSONShorter(t *testing.T) {
-	type LongUrl struct {
-		Url string `json:"url"`
+	type LongURL struct {
+		URL string `json:"url"`
 	}
 	type ShortURL struct {
 		Result string `json:"result"`
 	}
 	type want struct {
 		name       string
-		longURL    LongUrl
+		longURL    LongURL
 		requestURL string
 	}
 	tests := []want{
-		{name: "simple url", longURL: LongUrl{Url: "https://mail.ru"}, requestURL: "/api/shorten"},
+		{name: "simple url", longURL: LongURL{URL: "https://mail.ru"}, requestURL: "/api/shorten"},
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			var sUrl ShortURL
+			var sURL ShortURL
 			body, err := json.Marshal(test.longURL)
 			require.NoError(t, err)
 			req := httptest.NewRequest(http.MethodPost, test.requestURL, bytes.NewReader(body))
@@ -112,14 +112,14 @@ func TestGinJSONShorter(t *testing.T) {
 			bodyByte, err := io.ReadAll(result.Body)
 			defer result.Body.Close()
 			require.NoError(t, err)
-			err = json.Unmarshal(bodyByte, &sUrl)
+			err = json.Unmarshal(bodyByte, &sURL)
 			require.NoError(t, err)
-			str := string(sUrl.Result)
+			str := string(sURL.Result)
 			arr := strings.Split(str, "/")
 			id := arr[len(arr)-1]
 			wantLongURL, ok := urlDatabase[id]
 			assert.True(t, ok)
-			require.Equal(t, wantLongURL, test.longURL.Url)
+			require.Equal(t, wantLongURL, test.longURL.URL)
 		})
 	}
 }

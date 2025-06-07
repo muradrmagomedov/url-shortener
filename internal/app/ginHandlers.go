@@ -66,7 +66,7 @@ func ginJSONShorter(c *gin.Context) {
 	}
 
 	var longURL LongURL
-	var shortUrl ShortURL
+	var shortURL ShortURL
 
 	var testS = ShortURL{}
 	var testL = LongURL{URL: "test"}
@@ -81,11 +81,10 @@ func ginJSONShorter(c *gin.Context) {
 	urlDatabase[shortenedURLId] = longURL.URL
 	if shortURLAddr == "" {
 		shortURLAddr = "http://" + host + ":" + port
-
-		shortUrl.Result = shortURLAddr + "/" + shortenedURLId
-		c.Header("Content-Type", "application/json")
-		c.JSON(http.StatusCreated, shortUrl)
 	}
+	shortURL.Result = shortURLAddr + "/" + shortenedURLId
+	c.Header("Content-Type", "application/json")
+	c.JSON(http.StatusCreated, shortURL)
 }
 
 func GinLogger(h func(*gin.Context)) func(*gin.Context) {
