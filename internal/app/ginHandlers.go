@@ -68,10 +68,10 @@ func ginJSONShorter(c *gin.Context) {
 	var longURL LongURL
 	var shortUrl ShortURL
 
-	var test struct{}
-
-	json.Unmarshal([]byte("test"), &test)
-
+	var testS = ShortURL{}
+	var testL = LongURL{URL: "test"}
+	bt, _ := json.Marshal(testL)
+	_ = json.Unmarshal(bt, &testS)
 	err := c.ShouldBindBodyWithJSON(&longURL)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
