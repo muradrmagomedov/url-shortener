@@ -19,6 +19,7 @@ func (g GinServer) Run(addr string) error {
 	router := gin.Default()
 	router.POST("/", GinLogger(ginShortURL))
 	router.GET("/:id", GinLogger(ginGetURL))
+	router.POST("/api/shorten", GinLogger(ginJSONShorter))
 
 	log.Printf("Starting server at %s...\r\n", addr)
 	return router.Run(addr)
