@@ -1,9 +1,8 @@
 package server
 
 import (
-	"log"
-
 	"github.com/gin-gonic/gin"
+	log "github.com/sirupsen/logrus"
 )
 
 var shortURLAddr string
@@ -18,8 +17,9 @@ func NewGinServer(host string) *GinServer {
 
 func (g GinServer) Run(addr string) error {
 	router := gin.Default()
-	router.POST("/", ginShortURL)
-	router.GET("/:id", ginGetURL)
+	router.POST("/", GinLogger(ginShortURL))
+	router.GET("/:id", GinLogger(ginGetURL))
+	router.POST("/api/shorten", GinLogger(ginJSONShorter))
 
 	log.Printf("Starting server at %s...\r\n", addr)
 	return router.Run(addr)
