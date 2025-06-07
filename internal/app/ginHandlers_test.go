@@ -108,6 +108,7 @@ func TestGinJSONShorter(t *testing.T) {
 			c.Request = req
 			ginJSONShorter(c)
 			result := w.Result()
+			require.Equal(t, http.StatusCreated, result.StatusCode)
 			bodyByte, err := io.ReadAll(result.Body)
 			defer result.Body.Close()
 			require.NoError(t, err)

@@ -78,7 +78,7 @@ func ginJSONShorter(c *gin.Context) {
 	}
 	shortUrl.Result = shortURLAddr + "/" + shortenedURLId
 	c.Header("Content-Type", "application/json")
-	c.JSON(http.StatusOK, shortUrl)
+	c.JSON(http.StatusCreated, shortUrl)
 }
 
 func GinLogger(h func(*gin.Context)) func(*gin.Context) {
