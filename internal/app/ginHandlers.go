@@ -1,6 +1,7 @@
 package server
 
 import (
+	"encoding/json"
 	"net/http"
 	"time"
 
@@ -66,6 +67,11 @@ func ginJSONShorter(c *gin.Context) {
 
 	var longURL LongURL
 	var shortUrl ShortURL
+
+	var test struct{}
+
+	json.Unmarshal([]byte("test"), &test)
+
 	err := c.ShouldBindBodyWithJSON(&longURL)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -75,10 +81,11 @@ func ginJSONShorter(c *gin.Context) {
 	urlDatabase[shortenedURLId] = longURL.URL
 	if shortURLAddr == "" {
 		shortURLAddr = "http://" + host + ":" + port
+
+		shortUrl.Result = shortURLAddr + "/" + shortenedURLId
+		c.Header("Content-Type", "application/json")
+		c.JSON(http.StatusCreated, shortUrl)
 	}
-	shortUrl.Result = shortURLAddr + "/" + shortenedURLId
-	c.Header("Content-Type", "application/json")
-	c.JSON(http.StatusCreated, shortUrl)
 }
 
 func GinLogger(h func(*gin.Context)) func(*gin.Context) {
